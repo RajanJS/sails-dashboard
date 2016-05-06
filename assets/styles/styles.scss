@@ -1,0 +1,38 @@
+$error-color: #ff0000;
+html,
+body {
+  height: 100%;
+}
+
+[ng-cloak] {
+  display: none !important
+}
+
+.container {
+  @include outer-container(80%);
+
+  height: 100%;
+
+  & > header {
+  @include row();
+  }
+}
+
+.content {
+  @include span-columns(12);
+}
+
+.charts {
+  @include row();
+
+  height: 100%;
+
+  &.loading {
+      .loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+  }
+
+}
