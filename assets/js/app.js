@@ -1,26 +1,34 @@
-var app = angular.module('dashboard', ['chart.js']);
+var app = angular.module( 'dashboard', [ 'chart.js' ] );
 
-app.controller('main', ['$scope', '$http',
-  function($scope, $http) {
-    $scope.loading = true;
-    $scope.charts = [];
 
-    $http({
-      method: 'GET',
-      url: 'http://localhost:1337/event/find'
-    }).then(
-      function success(response) {
-        console.log(response);
-        buildDoughutChart(response.data, 'os', 'Visitor Os distribution');
-        buildDoughutChart(response.data, 'browser', 'Visitor Os distribution');
-        console.log(response);
-        $scope.loading = false;
-      }, function failure(error) {
-        console.log(error);
-      }
-    );
+app.controller('main', ['$scope', '$http', function ($scope, $http) {
 
-    function buildDoughutChart(events, property, title) {
+  $scope.loading = true;
+  $scope.charts = [];
+
+  $http({
+    method: 'GET',
+    url: 'http://localhost:1337/event/find'
+  }).then(
+    function success(response) {
+
+      buildDoughnutChart(response.data, 'os', 'Visitor OS distribution');
+      buildDoughnutChart(response.data, 'browser', 'Visitor Browser distribution');
+
+      $scope.loading = false;
+
+      /*// start listening for socket messages
+      io.socket.on('event', function (event) {
+        console.log(event);
+      });
+*/
+    },
+    function failure(error) {
+      console.log(error);
+    }
+  );
+    function buildDoughnutChart(events, property, title) {
+
       var prop,
         temp = {},
         data = {
@@ -30,18 +38,19 @@ app.controller('main', ['$scope', '$http',
           data: []
         };
 
-      events.forEach(function(event) {
+      events.forEach(function (event) {
         // build up labels array
         if (data.labels.indexOf(event[property]) === -1) {
           data.labels.push(event[property]);
         }
 
-        //build object to contain counts
+        // build object to contain counts
         if (!temp[event[property]]) {
           temp[event[property]] = {
             count: 0
           };
         }
+
         temp[event[property]].count += 1;
       });
 
@@ -50,7 +59,6 @@ app.controller('main', ['$scope', '$http',
       }
 
       $scope.charts.push(data);
-      console.log(data);
     }
-  }
-]);
+
+  }]);

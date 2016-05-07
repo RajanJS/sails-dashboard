@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title></title>
-    <meta charset="utf-8" />
-    <!--STYLES-->
-    <!--STYLES END-->
+  <title>[App name] Dashboard!</title>
+  <meta charset="utf-8"/>
+  <!--STYLES-->
+  <!--STYLES END-->
 </head>
-
-<body ng-app='dashboard'>
-    <section class="container">
-        <header>
-            <div class="content">
-                <h1>[App name] Dashboard!</h1>
-            </div>
-        </header>
-        <div class="charts" ng-class="{loading: loading}" ng-cloak>
-            <div class="loader">
-                <span>Loading...</span>
-            </div>
-        </div>
-        <article ng-repeat="chart in charts">
-            <h1>{{charts[$index].title}}</h1>
-            <div class="chart">
-                <canvas id="doughnut"
+<body ng-app="dashboard">
+<section class="container" ng-controller="main">
+  <header>
+    <div class="content">
+      <h1>[App name] Dashboard!</h1>
+    </div>
+  </header>
+  <div class="charts" ng-class="{loading: loading}" ng-cloak>
+    <div class="loader">
+      <span>Loading...</span>
+    </div>
+    <article ng-repeat="chart in charts">
+      <h1>{{charts[$index].title}}</h1>
+      <div class="chart">
+        <canvas id="doughnut"
                 class="chart chart-doughnut"
                 chart-data="charts[$index].data"
                 chart-labels="charts[$index].labels"
                 chart-legend="true"
                 chart-options="{showTooltips: false,responsive:true}">
-                </canvas>
-            </div>
-        </article>
-    </section>
-    <!--SCRIPTS-->
-    <!--SCRIPTS END-->
+        </canvas>
+      </div>
+    </article>
+  </div>
+</section>
+<!--SCRIPTS-->
+<!--SCRIPTS END-->
 </body>
 
 </html>
